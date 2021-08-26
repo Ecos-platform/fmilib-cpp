@@ -60,6 +60,7 @@ target_compile_features(fmilibcpp PUBLIC "cxx_std_17")
 set_target_properties(fmilibcpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(fmilibcpp
         PUBLIC
+        $<INSTALL_INTERFACE:include>
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>"
         PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}"
