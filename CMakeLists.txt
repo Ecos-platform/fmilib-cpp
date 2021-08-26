@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.11)
 file(STRINGS "${CMAKE_SOURCE_DIR}/version.txt" projectVersion)
 project("fmilibcpp" VERSION ${projectVersion})
 message("Current ${PROJECT_NAME} version: ${CMAKE_PROJECT_VERSION}\n")
@@ -27,22 +27,6 @@ if (MSVC)
   add_definitions("-D_WIN32_WINNT=0x600" "-D_CRT_SECURE_NO_WARNINGS")
   add_compile_options("/wd4996" "/wd4251" "/wd4244" "/wd4267")
 endif ()
-
-# Prepare for export and installation.
-set(FMILIBCPP_HEADER_INSTALL_DIR "include")
-if (WIN32)
-  set(FMILIBCPP_CMAKE_INSTALL_DIR "cmake")
-else ()
-  set(FMILIBCPP_CMAKE_INSTALL_DIR "share/${PROJECT_NAME}/cmake")
-endif ()
-
-set(FMILIBCPP_INSTALL_DESTINATIONS
-        ARCHIVE DESTINATION "lib"
-        LIBRARY DESTINATION "lib"
-        RUNTIME DESTINATION "bin"
-        INCLUDES DESTINATION "${FMILIBCPP_HEADER_INSTALL_DIR}")
-set(FMILIBCPP_EXPORT_TARGET "${PROJECT_NAME}-targets")
-
 
 # ==============================================================================
 # Dependencies
