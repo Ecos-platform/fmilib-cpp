@@ -24,6 +24,16 @@ if (MSVC)
     add_compile_options("/wd4996" "/wd4251" "/wd4244" "/wd4267")
 endif ()
 
+# Prepare for export and installation.
+set(FMILIBCPP_HEADER_INSTALL_DIR "include")
+
+set(FMILIBCPP_INSTALL_DESTINATIONS
+        ARCHIVE DESTINATION "lib"
+        LIBRARY DESTINATION "lib"
+        RUNTIME DESTINATION "bin"
+        INCLUDES DESTINATION "${FMILIBCPP_HEADER_INSTALL_DIR}")
+set(FMILIBCPP_EXPORT_TARGET "${PROJECT_NAME}-targets")
+
 # ==============================================================================
 # Dependencies
 # ==============================================================================
@@ -37,7 +47,6 @@ if (NOT FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY)
     if (FMILIBCPP_BUILD_TESTS)
         list(APPEND dependencies boost/1.71.0)
     endif ()
-
 
     # Download automatically, you can also just copy the conan.cmake file
     if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -81,3 +90,4 @@ if (FMILIBCPP_BUILD_EXAMPLES OR FMILIBCPP_BUILD_TESTS)
     endif ()
 
 endif ()
+
