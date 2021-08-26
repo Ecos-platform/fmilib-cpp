@@ -1,4 +1,4 @@
-set(publicHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+set(publicHeaderDir ${CMAKE_SOURCE_DIR}/include)
 
 # ==============================================================================
 # common headers
@@ -60,11 +60,25 @@ target_compile_features(fmilibcpp PUBLIC "cxx_std_17")
 set_target_properties(fmilibcpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(fmilibcpp
         PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>"
         PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}"
         )
 target_link_libraries(fmilibcpp PRIVATE CONAN_PKG::fmilibrary)
 if (UNIX)
-  target_link_libraries(fmilibcpp PRIVATE stdc++fs dl)
+  target_link_libraries(fmilibcpp INTERFACE stdc++fs PRIVATE dl)
 endif ()
+
+# ==============================================================================
+# Installation rules
+# ==============================================================================
+
+install(
+        TARGETS fmilibcpp
+        EXPORT "${FMILIBCPP_EXPORT_TARGET}"
+        ${FMILIBCPP_INSTALL_DESTINATIONS}
+)
+install(
+        DIRECTORY "${publicHeaderDir}/fmilibcpp"
+        DESTINATION "${FMILIBCPP_HEADER_INSTALL_DIR}"
+)
