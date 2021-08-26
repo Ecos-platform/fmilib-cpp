@@ -18,10 +18,6 @@ option(FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY "Conan is configured externally" OF
 
 set(CMAKE_CXX_STANDARD 17)
 
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release")
-endif ()
-
 if (MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     add_definitions("-D_WIN32_WINNT=0x600" "-D_CRT_SECURE_NO_WARNINGS")
@@ -33,6 +29,7 @@ endif ()
 # ==============================================================================
 
 if (NOT FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY)
+
     set(dependencies
             fmilibrary/2.0.3
             )
@@ -50,6 +47,10 @@ if (NOT FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY)
     endif ()
 
     include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+    if (NOT CMAKE_BUILD_TYPE)
+        set(CMAKE_BUILD_TYPE "Release")
+    endif ()
 
     conan_cmake_run(
             REQUIRES
