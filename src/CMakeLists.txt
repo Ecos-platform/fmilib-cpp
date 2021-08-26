@@ -1,4 +1,4 @@
-set(publicHeaderDir ${CMAKE_SOURCE_DIR}/include)
+set(publicHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 # ==============================================================================
 # common headers
