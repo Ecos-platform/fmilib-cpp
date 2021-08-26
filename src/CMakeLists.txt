@@ -1,4 +1,4 @@
-set(publicHeaderDir ${CMAKE_SOURCE_DIR}/include)
+set(publicHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 # ==============================================================================
 # common headers
@@ -68,17 +68,3 @@ target_link_libraries(fmilibcpp PRIVATE CONAN_PKG::fmilibrary)
 if (UNIX)
   target_link_libraries(fmilibcpp PRIVATE stdc++fs dl)
 endif ()
-
-# ==============================================================================
-# Installation rules
-# ==============================================================================
-
-install(
-        TARGETS fmilibcpp
-        EXPORT "${FMILIBCPP_EXPORT_TARGET}"
-        ${FMILIBCPP_INSTALL_DESTINATIONS}
-)
-install(
-        DIRECTORY "${publicHeaderDir}/FMILIBCPP"
-        DESTINATION "${FMILIBCPP_HEADER_INSTALL_DIR}"
-)

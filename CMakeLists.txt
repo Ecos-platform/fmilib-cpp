@@ -24,7 +24,6 @@ endif ()
 
 if (MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-    set(CMAKE_DEBUG_POSTFIX "d")
     add_definitions("-D_WIN32_WINNT=0x600" "-D_CRT_SECURE_NO_WARNINGS")
     add_compile_options("/wd4996" "/wd4251" "/wd4244" "/wd4267")
 endif ()
@@ -60,6 +59,8 @@ if (NOT FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY)
             BASIC_SETUP CMAKE_TARGETS)
 
 endif ()
+
+
 # ==============================================================================
 # Targets
 # ==============================================================================
