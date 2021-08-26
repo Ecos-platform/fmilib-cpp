@@ -10,6 +10,7 @@ message("Current ${PROJECT_NAME} version: ${CMAKE_PROJECT_VERSION}\n")
 
 option(FMILIBCPP_BUILD_TESTS "Build tests" ON)
 option(FMILIBCPP_BUILD_EXAMPLES "Build examples" OFF)
+option(FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY "Conan is configured externally" OFF)
 
 # ==============================================================================
 # Global internal configuration
@@ -32,31 +33,33 @@ endif ()
 # Dependencies
 # ==============================================================================
 
-set(dependencies
-        fmilibrary/2.0.3
-        )
+if (NOT FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY)
+    set(dependencies
+            fmilibrary/2.0.3
+            )
 
-if (FMILIBCPP_BUILD_TESTS)
-    list(APPEND dependencies boost/1.71.0)
+    if (FMILIBCPP_BUILD_TESTS)
+        list(APPEND dependencies boost/1.71.0)
+    endif ()
+
+
+    # Download automatically, you can also just copy the conan.cmake file
+    if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+        message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+        file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
+                "${CMAKE_BINARY_DIR}/conan.cmake")
+    endif ()
+
+    include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+    conan_cmake_run(
+            REQUIRES
+            ${dependencies}
+            BUILD missing
+            SETTINGS build_type=${CMAKE_BUILD_TYPE}
+            BASIC_SETUP CMAKE_TARGETS)
+
 endif ()
-
-
-# Download automatically, you can also just copy the conan.cmake file
-if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-    message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
-            "${CMAKE_BINARY_DIR}/conan.cmake")
-endif ()
-
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-
-conan_cmake_run(
-        REQUIRES
-        ${dependencies}
-        BUILD missing
-        SETTINGS build_type=${CMAKE_BUILD_TYPE}
-        BASIC_SETUP CMAKE_TARGETS)
-
 # ==============================================================================
 # Targets
 # ==============================================================================
