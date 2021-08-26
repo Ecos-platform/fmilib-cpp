@@ -21,11 +21,10 @@ jobs:
         run: |
           sudo pip3 install --upgrade setuptools pip
           sudo pip3 install conan
+
       - name: Configure Conan
         run: conan remote add osp https://osp.jfrog.io/artifactory/api/conan/conan-local --force
-      - name: Run conan
-        run: conan install . -s build_type=Release -s compiler.libcxx=libstdc++11 --install-folder=build
-        shell: bash
+
       - name: Configure and build
         run: |
           cmake . -B build -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
@@ -50,18 +49,16 @@ jobs:
         run: |
           pip3 install --upgrade setuptools pip
           pip3 install conan
+
       - name: Configure Conan
         run: conan remote add osp https://osp.jfrog.io/artifactory/api/conan/conan-local --force
-      - name: Run conan
-        run: conan install . -s build_type=Release --install-folder=build
-        shell: bash
+
       - name: Configure and build
         run: |
           cmake . -A x64 -B build -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
           cmake --build build --config Release
-        shell: bash
+
       - name: Test
         run: |
          cd build/tests
          ctest -C Release --output-on-failure
-        shell: bash
