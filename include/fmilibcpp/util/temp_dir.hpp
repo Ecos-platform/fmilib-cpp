@@ -4,7 +4,7 @@
 
 #include "fixed_range_random_generator.hpp"
 
-#include <fmilibcpp/fs_portability.hpp>
+#include <fmilibcpp/util/fs_portability.hpp>
 
 #include <iostream>
 #include <memory>

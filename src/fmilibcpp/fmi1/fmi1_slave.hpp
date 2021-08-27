@@ -6,7 +6,7 @@
 #include "fmi1_model_description.hpp"
 
 #include <fmilibcpp/slave.hpp>
-#include <fmilibcpp/temp_dir.hpp>
+#include <fmilibcpp/util/temp_dir.hpp>
 
 #include <fmilib.h>
 #include <memory>

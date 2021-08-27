@@ -30,11 +30,12 @@ struct boolean
     std::optional<bool> start;
 };
 
+using value_ref = unsigned int;
 using type_attribute = std::variant<real, integer, string, boolean>;
 
 struct scalar_variable
 {
-    unsigned int vr;
+    value_ref vr;
     std::string name;
     std::optional<std::string> causality;
     std::optional<std::string> variability;

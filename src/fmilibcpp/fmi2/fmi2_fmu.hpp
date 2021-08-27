@@ -5,7 +5,7 @@
 #include "../fmicontext.hpp"
 
 #include <fmilibcpp/fmu.hpp>
-#include <fmilibcpp/temp_dir.hpp>
+#include <fmilibcpp/util/temp_dir.hpp>
 
 #include <fmilib.h>
 

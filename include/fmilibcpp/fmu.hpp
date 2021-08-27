@@ -2,9 +2,9 @@
 #ifndef FMILIBCPP_FMU_FMU_HPP
 #define FMILIBCPP_FMU_FMU_HPP
 
-#include <fmilibcpp/fs_portability.hpp>
 #include <fmilibcpp/model_description.hpp>
 #include <fmilibcpp/slave.hpp>
+#include <fmilibcpp/util/fs_portability.hpp>
 
 #include <memory>
 
