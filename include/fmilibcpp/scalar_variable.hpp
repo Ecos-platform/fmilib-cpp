@@ -3,6 +3,7 @@
 #define FMILIBCPP_SCALAR_VARIABLE_HPP
 
 #include <optional>
+#include <stdexcept>
 #include <string>
 #include <variant>
 #include <vector>
@@ -31,7 +32,18 @@ struct boolean
 };
 
 using value_ref = unsigned int;
-using type_attribute = std::variant<real, integer, string, boolean>;
+using type_attribute = std::variant<integer, real, string, boolean>;
+
+inline std::string type_name(const type_attribute& attribute)
+{
+    switch (attribute.index()) {
+        case 0: return "integer";
+        case 1: return "real";
+        case 2: return "string";
+        case 3: return "boolean";
+        default: throw std::runtime_error("Invalid variant");
+    }
+}
 
 struct scalar_variable
 {
@@ -66,4 +78,4 @@ using model_variables = std::vector<scalar_variable>;
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_SCALAR_VARIABLE_HPP
+#endif // FMILIBCPP_SCALAR_VARIABLE_HPP
