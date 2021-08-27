@@ -2,10 +2,15 @@
 
 Simplified and object-oriented C++ wrapper for [FMI Library](https://github.com/modelon-community/fmi-library).
 
-### Requirements
+### Conan
 
-This project uses [conan](https://conan.io/) for dependency management.
+fmilib-cpp uses [conan](https://conan.io/) under-the-hood for managing dependencies.
 
-Furthermore, the _fmilib_ dependency requires a custom remote, please add it using the command:
+```
+pip install conan
+```
 
-`conan remote add osp https://osp.jfrog.io/artifactory/api/conan/conan-local`
+Make sure to add osp as a remote prior to configuring the project:
+```
+conan remote add osp https://osp.jfrog.io/artifactory/api/conan/conan-local
+```
