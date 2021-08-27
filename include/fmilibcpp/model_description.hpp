@@ -4,6 +4,7 @@
 
 #include <fmilibcpp/scalar_variable.hpp>
 
+#include <algorithm>
 #include <optional>
 #include <vector>
 
