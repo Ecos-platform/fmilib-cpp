@@ -22,7 +22,7 @@ void run()
     std::cout << mv[0].name << std::endl;
 
     for (auto& v : mv) {
-        auto attr = v.typeAttribute;
+        auto attr = v.typeAttributes;
         if (v.is_real()) {
             auto start = std::get<real>(attr).start;
             if (start) {
