@@ -11,30 +11,30 @@
 namespace fmilibcpp
 {
 
-struct real
+struct real_attributes
 {
     std::optional<double> start;
 };
 
-struct integer
+struct integer_attributes
 {
     std::optional<int> start;
 };
 
-struct string
+struct string_attributes
 {
     std::optional<std::string> start;
 };
 
-struct boolean
+struct boolean_attributes
 {
     std::optional<bool> start;
 };
 
 using value_ref = unsigned int;
-using type_attribute = std::variant<integer, real, string, boolean>;
+using type_attributes = std::variant<integer_attributes, real_attributes, string_attributes, boolean_attributes>;
 
-inline std::string type_name(const type_attribute& attribute)
+inline std::string type_name(const type_attributes& attribute)
 {
     switch (attribute.index()) {
         case 0: return "integer";
@@ -51,26 +51,26 @@ struct scalar_variable
     std::string name;
     std::optional<std::string> causality;
     std::optional<std::string> variability;
-    type_attribute typeAttribute;
-
-    [[nodiscard]] bool is_real() const
-    {
-        return typeAttribute.index() == 0;
-    }
+    type_attributes typeAttributes;
 
     [[nodiscard]] bool is_integer() const
     {
-        return typeAttribute.index() == 1;
+        return typeAttributes.index() == 0;
+    }
+
+    [[nodiscard]] bool is_real() const
+    {
+        return typeAttributes.index() == 1;
     }
 
     [[nodiscard]] bool is_string() const
     {
-        return typeAttribute.index() == 2;
+        return typeAttributes.index() == 2;
     }
 
     [[nodiscard]] bool is_boolean() const
     {
-        return typeAttribute.index() == 3;
+        return typeAttributes.index() == 3;
     }
 };
 

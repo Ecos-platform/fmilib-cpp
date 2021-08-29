@@ -20,32 +20,32 @@ std::optional<fmilibcpp::scalar_variable> to_scalar_variable(fmi2_import_variabl
 
     switch (type) {
         case fmi2_base_type_real: {
-            fmilibcpp::real r;
+            fmilibcpp::real_attributes r{};
             if (fmi2_import_get_variable_has_start(v)) {
                 r.start = fmi2_import_get_real_variable_start(fmi2_import_get_variable_as_real(v));
             }
-            var.typeAttribute = r;
+            var.typeAttributes = r;
         } break;
         case fmi2_base_type_int: {
-            fmilibcpp::integer i;
+            fmilibcpp::integer_attributes i{};
             if (fmi2_import_get_variable_has_start(v)) {
                 i.start = fmi2_import_get_integer_variable_start(fmi2_import_get_variable_as_integer(v));
             }
-            var.typeAttribute = i;
+            var.typeAttributes = i;
         } break;
         case fmi2_base_type_bool: {
-            fmilibcpp::boolean b;
+            fmilibcpp::boolean_attributes b{};
             if (fmi2_import_get_variable_has_start(v)) {
                 b.start = fmi2_import_get_boolean_variable_start(fmi2_import_get_variable_as_boolean(v));
             }
-            var.typeAttribute = b;
+            var.typeAttributes = b;
         } break;
         case fmi2_base_type_str: {
-            fmilibcpp::string s;
+            fmilibcpp::string_attributes s{};
             if (fmi2_import_get_variable_has_start(v)) {
                 s.start = fmi2_import_get_string_variable_start(fmi2_import_get_variable_as_string(v));
             }
-            var.typeAttribute = s;
+            var.typeAttributes = s;
         } break;
         case fmi2_base_type_enum: break;
     }
