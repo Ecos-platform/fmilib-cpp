@@ -24,9 +24,9 @@ void run()
     for (auto& v : mv) {
         auto attr = v.typeAttributes;
         if (v.is_real()) {
-            auto start = std::get<real>(attr).start;
+            auto start = std::get<real_attributes>(attr).start;
             if (start) {
-                std::cout << "start=" << std::get<real>(attr).start.value() << std::endl;
+                std::cout << "start=" << std::get<real_attributes>(attr).start.value() << std::endl;
             }
         }
     }
