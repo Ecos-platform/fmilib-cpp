@@ -15,6 +15,11 @@ using value_ref = unsigned int;
 class slave
 {
 public:
+    const std::string instanceName;
+
+    explicit slave(std::string instanceName)
+        : instanceName(instanceName){}
+
     virtual bool setup_experiment(
         double start_time = 0,
         double stop_time = 0,
@@ -73,4 +78,4 @@ public:
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_SLAVE_HPP
+#endif // FMILIBCPP_SLAVE_HPP

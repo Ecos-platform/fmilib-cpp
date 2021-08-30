@@ -24,7 +24,8 @@ fmi2_slave::fmi2_slave(
     const std::string& instanceName,
     model_description md,
     std::shared_ptr<temp_dir> tmpDir)
-    : ctx_(ctx)
+    : slave(instanceName)
+    , ctx_(ctx)
     , md_(std::move(md))
     , tmpDir_(std::move(tmpDir))
     , handle_(fmi2_import_parse_xml(ctx->ctx_, tmpDir->path().string().c_str(), nullptr))
@@ -42,7 +43,7 @@ fmi2_slave::fmi2_slave(
 
     const auto rc = fmi2_import_instantiate(
         handle_,
-        instanceName.c_str(),
+        this->instanceName.c_str(),
         fmi2_cosimulation,
         nullptr,
         fmi2_false);

@@ -2,7 +2,6 @@
 #include "fmi1_slave.hpp"
 
 #include <fmilib.h>
-
 #include <utility>
 
 namespace
@@ -25,7 +24,8 @@ fmi1_slave::fmi1_slave(
     const std::string& instanceName,
     model_description md,
     std::shared_ptr<temp_dir> tmpDir)
-    : ctx_(ctx)
+    : slave(instanceName)
+    , ctx_(ctx)
     , md_(std::move(md))
     , tmpDir_(std::move(tmpDir))
     , handle_(fmi1_import_parse_xml(ctx->ctx_, tmpDir->path().string().c_str()))
@@ -41,7 +41,7 @@ fmi1_slave::fmi1_slave(
 
     const auto rc = fmi1_import_instantiate_slave(
         handle_,
-        instanceName.c_str(),
+        this->instanceName.c_str(),
         nullptr,
         nullptr,
         0,
