@@ -35,7 +35,7 @@ struct model_description
 
     [[nodiscard]] std::optional<scalar_variable> get_by_name(const std::string& name) const
     {
-        auto result = std::find_if(modelVariables.begin(), modelVariables.end(), [&name](const scalar_variable &s) {
+        auto result = std::find_if(modelVariables.begin(), modelVariables.end(), [&name](const scalar_variable& s) {
             return s.name == name;
         });
 
@@ -46,10 +46,21 @@ struct model_description
         }
     }
 
+    template<class T>
     [[nodiscard]] std::optional<scalar_variable> get_by_vr(value_ref vr) const
     {
-        auto result = std::find_if(modelVariables.begin(), modelVariables.end(), [&vr](const scalar_variable &s) {
-            return s.vr == vr;
+        auto result = std::find_if(modelVariables.begin(), modelVariables.end(), [&vr](const scalar_variable& s) {
+            if (std::is_same<T, int>() && s.is_integer()) {
+                return s.vr == vr;
+            } else if (std::is_same<T, double>() && s.is_real()) {
+                return s.vr == vr;
+            } else if (std::is_same<T, std::string>() && s.is_string()) {
+                return s.vr == vr;
+            } else if (std::is_same<T, bool>() && s.is_boolean()) {
+                return s.vr == vr;
+            } else {
+                return false;
+            }
         });
 
         if (result != modelVariables.end()) {
@@ -58,9 +69,8 @@ struct model_description
             return std::nullopt;
         }
     }
-
 };
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_MODEL_DESCRIPTION_HPP
+#endif // FMILIBCPP_MODEL_DESCRIPTION_HPP
