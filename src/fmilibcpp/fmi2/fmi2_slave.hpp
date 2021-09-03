@@ -22,8 +22,6 @@ private:
     std::shared_ptr<fmicontext> ctx_;
     std::shared_ptr<temp_dir> tmpDir_;
 
-    bool freed = false;
-
 public:
     fmi2_slave(
         const std::shared_ptr<fmicontext>& ctx,
@@ -39,7 +37,6 @@ public:
     bool step(double current_time, double step_size) override;
 
     bool terminate() override;
-    void freeInstance() override;
 
     bool get_integer(const std::vector<value_ref>& vr, std::vector<int>& values) override;
     bool get_real(const std::vector<value_ref>& vr, std::vector<double>& values) override;

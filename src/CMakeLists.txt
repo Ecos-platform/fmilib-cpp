@@ -22,6 +22,7 @@ endforeach ()
 set(fmiPublicHeaders
         "fmilibcpp/fmu.hpp"
         "fmilibcpp/slave.hpp"
+        "fmilibcpp/buffered_slave.hpp"
         "fmilibcpp/scalar_variable.hpp"
         "fmilibcpp/model_description.hpp"
         )
