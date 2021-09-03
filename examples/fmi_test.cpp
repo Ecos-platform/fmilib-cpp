@@ -1,6 +1,8 @@
 
 #include <fmilibcpp/fmu.hpp>
 
+#include <fmilibcpp/buffered_slave.hpp>
+
 #include <exception>
 #include <iostream>
 
@@ -31,20 +33,35 @@ void run()
         }
     }
 
-    auto v = std::vector<std::unique_ptr<slave>>();
+
+    auto slaves = std::vector<std::unique_ptr<slave>>();
+
+
     for (auto i = 0; i < 10; i++) {
         auto slave = fmu->new_instance("instance_" + std::to_string(i));
-        slave->setup_experiment();
-        slave->enter_initialization_mode();
-        slave->exit_initialization_mode();
-        slave->step(0.0, 0.1);
+        auto buf = std::make_unique<buffered_slave>(std::move(slave));
+        buf->setup_experiment();
+        buf->enter_initialization_mode();
+        buf->exit_initialization_mode();
 
-        v.push_back(std::move(slave));
+        double t = 0;
+        double dt = 0.1;
+        for (int j = 0; j < 10; j++) {
+
+            buf->transferCachedSets();
+            buf->step(t, dt);
+            buf->receiveCachedGets();
+
+            std::cout << buf->slave::get_real(md.get_by_name("Temperature_Room")->vr) << std::endl;
+
+            t += dt;
+        }
+
+        slaves.push_back(std::move(buf));
     }
 
-    for (auto& slave : v) {
+    for (auto& slave : slaves) {
         slave->terminate();
-        slave->freeInstance();
     }
 }
 

@@ -33,7 +33,6 @@ public:
     virtual bool step(double current_time, double step_size) = 0;
 
     virtual bool terminate() = 0;
-    virtual void freeInstance() = 0;
 
     int get_integer(value_ref vr)
     {
@@ -63,15 +62,15 @@ public:
         return values.front();
     }
 
-    virtual bool get_integer(const std::vector<value_ref>& vr, std::vector<int>& values) = 0;
-    virtual bool get_real(const std::vector<value_ref>& vr, std::vector<double>& values) = 0;
-    virtual bool get_string(const std::vector<value_ref>& vr, std::vector<std::string>& values) = 0;
-    virtual bool get_boolean(const std::vector<value_ref>& vr, std::vector<bool>& values) = 0;
+    virtual bool get_integer(const std::vector<value_ref>& vrs, std::vector<int>& values) = 0;
+    virtual bool get_real(const std::vector<value_ref>& vrs, std::vector<double>& values) = 0;
+    virtual bool get_string(const std::vector<value_ref>& vrs, std::vector<std::string>& values) = 0;
+    virtual bool get_boolean(const std::vector<value_ref>& vrs, std::vector<bool>& values) = 0;
 
-    virtual bool set_integer(const std::vector<value_ref>& vr, const std::vector<int>& values) = 0;
-    virtual bool set_real(const std::vector<value_ref>& vr, const std::vector<double>& values) = 0;
-    virtual bool set_string(const std::vector<value_ref>& vr, const std::vector<std::string>& values) = 0;
-    virtual bool set_boolean(const std::vector<value_ref>& vr, const std::vector<bool>& values) = 0;
+    virtual bool set_integer(const std::vector<value_ref>& vrs, const std::vector<int>& values) = 0;
+    virtual bool set_real(const std::vector<value_ref>& vrs, const std::vector<double>& values) = 0;
+    virtual bool set_string(const std::vector<value_ref>& vrs, const std::vector<std::string>& values) = 0;
+    virtual bool set_boolean(const std::vector<value_ref>& vrs, const std::vector<bool>& values) = 0;
 
     virtual ~slave() = default;
 };

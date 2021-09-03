@@ -1,6 +1,7 @@
-#define BOOST_TEST_MODULE test_identity
+#define BOOST_TEST_MODULE test_buffered_identity
 
 #include <fmilibcpp/fmu.hpp>
+#include <fmilibcpp/buffered_slave.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -17,7 +18,7 @@ void test(fmu& fmu)
                "Has one input and one output of each type, and outputs are always set equal to inputs");
     BOOST_TEST(d.author == "Lars Tandle Kyllingstad");
 
-    auto slave = fmu.new_instance("instance");
+    auto slave = std::make_unique<buffered_slave>(fmu.new_instance("instance"));
     BOOST_REQUIRE(slave->setup_experiment());
     BOOST_REQUIRE(slave->enter_initialization_mode());
     BOOST_REQUIRE(slave->exit_initialization_mode());
@@ -39,6 +40,8 @@ void test(fmu& fmu)
     double dt = 0.1;
 
     while (t <= tEnd) {
+
+        slave->receiveCachedGets();
 
         slave->get_real(vr, realRef);
         slave->get_integer(vr, integerRef);
@@ -62,6 +65,8 @@ void test(fmu& fmu)
         slave->set_boolean(vr, booleanVal);
         slave->set_string(vr, stringVal);
 
+        slave->transferCachedSets();
+
         t += dt;
     }
 
@@ -70,7 +75,7 @@ void test(fmu& fmu)
 
 } // namespace
 
-BOOST_AUTO_TEST_CASE(fmi_test_identity)
+BOOST_AUTO_TEST_CASE(test_buffered_identity)
 {
     std::string fmuPath("../fmus/1.0/identity.fmu");
     auto fmu = loadFmu(fmuPath);
