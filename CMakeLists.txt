@@ -8,9 +8,9 @@ message("Current ${PROJECT_NAME} version: ${CMAKE_PROJECT_VERSION}\n")
 # Build settings
 # ==============================================================================
 
+set(BUILD_SHARED_LIBS OFF)
 option(FMILIBCPP_BUILD_TESTS "Build tests" ON)
 option(FMILIBCPP_BUILD_EXAMPLES "Build examples" OFF)
-option(FMILIBCPP_CONAN_CONFIGURED_EXTERNALLY "Conan is configured externally" OFF)
 
 # ==============================================================================
 # Global internal configuration
@@ -56,7 +56,7 @@ if (FMILIBCPP_BUILD_TESTS)
     list(APPEND BOOST_COMPONENTS unit_test_framework)
 endif ()
 
-find_package(Boost COMPONENTS ${BOOST_COMPONENTS} REQUIRED)
+find_package(Boost 1.71 COMPONENTS ${BOOST_COMPONENTS} REQUIRED)
 find_package(FMILIB REQUIRED)
 
 # ==============================================================================
