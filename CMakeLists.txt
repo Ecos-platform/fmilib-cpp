@@ -115,7 +115,6 @@ install(FILES "${versionFile}" DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}")
 # Install custom find modules
 install(FILES
         "${CMAKE_SOURCE_DIR}/cmake/FindFMILIB.cmake"
-        "${CMAKE_SOURCE_DIR}/cmake/FindTHRIFT.cmake"
         DESTINATION
         "${FMILIBCPP_CMAKE_INSTALL_DIR}"
         )
