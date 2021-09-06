@@ -1,5 +1,5 @@
 
-link_libraries(fmilibcpp CONAN_PKG::boost)
+link_libraries(fmilibcpp ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_executable(test_identity test_identity.cpp)
 add_test(NAME test_identity COMMAND test_identity)
