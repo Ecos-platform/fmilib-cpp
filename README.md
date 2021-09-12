@@ -19,7 +19,7 @@ conan remote add osp https://osp.jfrog.io/artifactory/api/conan/conan-local
 
 `fmilibcpp` is avilable through the conan remote ais:
 
-`conan remote add ais https://ais.jfrog.io/artifactory/api/conan/ais-conan`
+`conan remote add ais https://ais.jfrog.io/artifactory/api/conan/ais-conan-local`
 
-Then add a dependency to: `fmilibcpp/0.1.0@ais/testing`
+Then add a dependency to: `fmilibcpp/<verrsion>@ais/testing`
 
