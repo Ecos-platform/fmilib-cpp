@@ -50,13 +50,6 @@ else ()
     message(FATAL_ERROR "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first!")
 endif ()
 
-set(Boost_USE_STATIC_LIBS ON)
-set(BOOST_COMPONENTS filesystem program_options)
-if (FMILIBCPP_BUILD_TESTS)
-    list(APPEND BOOST_COMPONENTS unit_test_framework)
-endif ()
-
-find_package(Boost 1.71 COMPONENTS ${BOOST_COMPONENTS} REQUIRED)
 find_package(FMILIB REQUIRED)
 
 # ==============================================================================

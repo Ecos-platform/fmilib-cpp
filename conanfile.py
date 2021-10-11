@@ -15,7 +15,6 @@ class FmilibcppConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     requires = (
-        "boost/1.71.0",
         "fmilibrary/2.0.3"
     )
 
