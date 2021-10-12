@@ -43,12 +43,23 @@ set(FMILIBCPP_EXPORT_TARGET "${PROJECT_NAME}-targets")
 # Dependencies
 # ==============================================================================
 
-if (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+if(CONAN_EXPORTED) # in conan local cache
+    # standard conan installation, deps will be defined in conanfile.py
+    # and not necessary to call conan again, conan is already running
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     conan_basic_setup()
-else ()
-    message(FATAL_ERROR "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first!")
-endif ()
+else()
+
+    include(cmake/conan.cmake)
+    conan_cmake_autodetect(settings)
+
+    conan_cmake_run(
+            CONANFILE conanfile.py
+            BUILD missing
+            SETTINGS ${settings}
+            BASIC_SETUP)
+
+endif()
 
 find_package(FMILIB REQUIRED)
 
