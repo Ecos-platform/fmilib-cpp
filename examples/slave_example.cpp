@@ -1,8 +1,6 @@
 
 #include <fmilibcpp/fmu.hpp>
 
-#include <fmilibcpp/buffered_slave.hpp>
-
 #include <exception>
 #include <iostream>
 
@@ -39,25 +37,21 @@ void run()
 
     for (auto i = 0; i < 10; i++) {
         auto slave = fmu->new_instance("instance_" + std::to_string(i));
-        auto buf = std::make_unique<buffered_slave>(std::move(slave));
-        buf->setup_experiment();
-        buf->enter_initialization_mode();
-        buf->exit_initialization_mode();
+        slave->setup_experiment();
+        slave->enter_initialization_mode();
+        slave->exit_initialization_mode();
 
         double t = 0;
         double dt = 0.1;
         for (int j = 0; j < 10; j++) {
 
-            buf->transferCachedSets();
-            buf->step(t, dt);
-            buf->receiveCachedGets();
-
-            std::cout << buf->slave::get_real(md.get_by_name("Temperature_Room")->vr) << std::endl;
+            slave->step(t, dt);
+            std::cout << slave->slave::get_real(md.get_by_name("Temperature_Room")->vr) << std::endl;
 
             t += dt;
         }
 
-        slaves.push_back(std::move(buf));
+        slaves.push_back(std::move(slave));
     }
 
     for (auto& slave : slaves) {
@@ -73,6 +67,7 @@ int main()
 
     } catch (std::exception& ex) {
         std::cerr << "error: " << ex.what() << std::endl;
+        return -1;
     }
     return 0;
 }
