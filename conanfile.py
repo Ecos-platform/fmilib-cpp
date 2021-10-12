@@ -15,7 +15,7 @@ class FmilibcppConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     requires = (
-        "fmilibrary/2.0.3"
+        "fmilibrary/2.3"
     )
 
     def set_version(self):
