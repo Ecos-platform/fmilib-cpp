@@ -1,4 +1,4 @@
-set(publicHeaderDir ${CMAKE_SOURCE_DIR}/include)
+set(publicHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 # ==============================================================================
 # common headers
@@ -61,7 +61,7 @@ target_compile_features(fmilibcpp PUBLIC "cxx_std_17")
 set_target_properties(fmilibcpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(fmilibcpp
         PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>"
         PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}"
         )

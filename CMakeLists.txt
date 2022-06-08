@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.11)
-file(STRINGS "${CMAKE_SOURCE_DIR}/version.txt" projectVersion)
+file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" projectVersion)
 project("fmilibcpp" VERSION ${projectVersion})
 message("Current ${PROJECT_NAME} version: ${CMAKE_PROJECT_VERSION}\n")
 
@@ -17,7 +17,7 @@ option(FMILIBCPP_BUILD_EXAMPLES "Build examples" OFF)
 # ==============================================================================
 
 set(CMAKE_CXX_STANDARD 17)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -106,7 +106,7 @@ include(CMakePackageConfigHelpers)
 set(configFile "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config.cmake")
 set(targetsFile "${FMILIBCPP_CMAKE_INSTALL_DIR}/${FMILIBCPP_EXPORT_TARGET}.cmake")
 configure_package_config_file(
-        "${CMAKE_SOURCE_DIR}/cmake/project-config.cmake.in"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/project-config.cmake.in"
         "${configFile}"
         INSTALL_DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}"
         PATH_VARS targetsFile
@@ -123,7 +123,7 @@ install(FILES "${versionFile}" DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}")
 
 # Install custom find modules
 install(FILES
-        "${CMAKE_SOURCE_DIR}/cmake/FindFMILIB.cmake"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindFMILIB.cmake"
         DESTINATION
         "${FMILIBCPP_CMAKE_INSTALL_DIR}"
         )
