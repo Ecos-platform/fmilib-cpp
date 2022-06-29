@@ -62,11 +62,9 @@ else()
             CONANFILE conanfile.py
             BUILD missing
             SETTINGS ${settings}
-            BASIC_SETUP)
+            BASIC_SETUP CMAKE_TARGETS)
 
 endif()
-
-find_package(FMILIB REQUIRED)
 
 # ==============================================================================
 # Targets
