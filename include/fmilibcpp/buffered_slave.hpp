@@ -20,7 +20,12 @@ public:
         , slave_{std::move(instance)}
     { }
 
-    const model_description& get_model_description() const override
+    slave* get()
+    {
+        return slave_.get();
+    }
+
+    [[nodiscard]] const model_description& get_model_description() const override
     {
         return slave_->get_model_description();
     }
@@ -266,9 +271,9 @@ public:
         }
     }
 
-    slave* get()
+    void freeInstance() override
     {
-        return slave_.get();
+        slave_->freeInstance();
     }
 
 private:

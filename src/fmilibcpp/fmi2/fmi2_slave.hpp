@@ -17,6 +17,7 @@ namespace fmilibcpp
 class fmi2_slave : public slave
 {
 private:
+    bool freed_{false};
     fmi2_import_t* handle_;
     const model_description md_;
     std::shared_ptr<fmicontext> ctx_;
@@ -38,6 +39,7 @@ public:
 
     bool terminate() override;
     bool reset() override;
+    void freeInstance() override;
 
     bool get_integer(const std::vector<value_ref>& vr, std::vector<int>& values) override;
     bool get_real(const std::vector<value_ref>& vr, std::vector<double>& values) override;

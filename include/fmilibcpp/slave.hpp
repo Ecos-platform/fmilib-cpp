@@ -33,8 +33,8 @@ public:
     virtual bool step(double current_time, double step_size) = 0;
 
     virtual bool terminate() = 0;
-
     virtual bool reset() = 0;
+    virtual void freeInstance() = 0;
 
     int get_integer(value_ref vr)
     {
