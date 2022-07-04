@@ -23,6 +23,7 @@ class FmilibcppConan(ConanFile):
 
     def configure_cmake(self):
         cmake = CMake(self)
+        cmake.definitions["FMILIBCPP_BUILD_TESTS"] = "OFF"
         cmake.configure()
         return cmake
 
