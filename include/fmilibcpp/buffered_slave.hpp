@@ -55,6 +55,11 @@ public:
         return slave_->terminate();
     }
 
+    bool reset() override
+    {
+        return slave_->reset();
+    }
+
     bool get_integer(const std::vector<value_ref>& vrs, std::vector<int>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
@@ -259,8 +264,6 @@ public:
                 booleanGetCache_[vr] = slave_->get_boolean(vr);
             }
         }
-
-
     }
 
     slave* get()

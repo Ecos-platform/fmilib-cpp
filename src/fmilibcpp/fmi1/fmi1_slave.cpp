@@ -91,6 +91,12 @@ bool fmi1_slave::terminate()
     return status == fmi1_status_ok;
 }
 
+bool fmi1_slave::reset()
+{
+    auto status = fmi1_import_reset_slave(handle_);
+    return status == fmi1_status_ok;
+}
+
 bool fmi1_slave::get_integer(const std::vector<value_ref>& vr, std::vector<int>& values)
 {
     auto status = fmi1_import_get_integer(handle_, vr.data(), vr.size(), values.data());

@@ -37,7 +37,9 @@ public:
     bool enter_initialization_mode() override;
     bool exit_initialization_mode() override;
     bool step(double current_time, double step_size) override;
+
     bool terminate() override;
+    bool reset() override;
 
     bool get_integer(const std::vector<value_ref>& vr, std::vector<int>& values) override;
     bool get_real(const std::vector<value_ref>& vr, std::vector<double>& values) override;

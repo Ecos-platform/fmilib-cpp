@@ -34,6 +34,8 @@ public:
 
     virtual bool terminate() = 0;
 
+    virtual bool reset() = 0;
+
     int get_integer(value_ref vr)
     {
         std::vector<int> values(1);
