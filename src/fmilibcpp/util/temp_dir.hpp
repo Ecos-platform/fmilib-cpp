@@ -4,11 +4,12 @@
 
 #include "fixed_range_random_generator.hpp"
 
-#include <fmilibcpp/util/fs_portability.hpp>
+#include "fmilibcpp/util/fs_portability.hpp"
 
 #include <iostream>
 #include <memory>
 #include <random>
+#include <string>
 
 namespace
 {
@@ -58,4 +59,4 @@ public:
 } // namespace fmilibcpp
 
 
-#endif //FMILIBCPP_TEMP_DIR_HPP
+#endif // FMILIBCPP_TEMP_DIR_HPP

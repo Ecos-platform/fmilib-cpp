@@ -29,4 +29,4 @@ public:
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FIXED_RANGE_RANDOM_GENERATOR_HPP
+#endif // FMILIBCPP_FIXED_RANGE_RANDOM_GENERATOR_HPP

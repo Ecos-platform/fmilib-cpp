@@ -1,33 +1,20 @@
 set(publicHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 # ==============================================================================
-# common headers
-# ==============================================================================
-
-set(commonPublicHeaders
-        "fmilibcpp/util/temp_dir.hpp"
-        "fmilibcpp/util/fs_portability.hpp"
-        "fmilibcpp/util/fixed_range_random_generator.hpp"
-        )
-
-set(commonPublicHeadersFull)
-foreach (header IN LISTS commonPublicHeaders)
-  list(APPEND commonPublicHeadersFull "${publicHeaderDir}/${header}")
-endforeach ()
-
-# ==============================================================================
 # fmilib wrapper
 # ==============================================================================
 
-set(fmiPublicHeaders
+set(publicHeaders
         "fmilibcpp/fmu.hpp"
         "fmilibcpp/slave.hpp"
         "fmilibcpp/buffered_slave.hpp"
         "fmilibcpp/scalar_variable.hpp"
         "fmilibcpp/model_description.hpp"
+
+        "fmilibcpp/util/fs_portability.hpp"
         )
 
-set(fmiPrivateHeaders
+set(privateHeaders
         "fmilibcpp/fmicontext.hpp"
 
         "fmilibcpp/fmi1/fmi1_fmu.hpp"
@@ -37,9 +24,12 @@ set(fmiPrivateHeaders
         "fmilibcpp/fmi2/fmi2_fmu.hpp"
         "fmilibcpp/fmi2/fmi2_model_description.hpp"
         "fmilibcpp/fmi2/fmi2_slave.hpp"
+
+        "fmilibcpp/util/fixed_range_random_generator.hpp"
+        "fmilibcpp/util/temp_dir.hpp"
         )
 
-set(fmiSources
+set(sources
         "fmilibcpp/fmu.cpp"
 
         "fmilibcpp/fmi1/fmi1_fmu.cpp"
@@ -51,12 +41,12 @@ set(fmiSources
         "fmilibcpp/fmi2/fmi2_model_description.cpp"
         )
 
-set(fmiPublicHeadersFull)
-foreach (header IN LISTS fmiPublicHeaders)
-  list(APPEND fmiPublicHeadersFull "${publicHeaderDir}/${header}")
+set(publicHeadersFull)
+foreach (header IN LISTS publicHeaders)
+  list(APPEND publicHeadersFull "${publicHeaderDir}/${header}")
 endforeach ()
 
-add_library(fmilibcpp ${commonPublicHeadersFull} ${fmiPublicHeadersFull} ${fmiPrivateHeaders} ${fmiSources})
+add_library(fmilibcpp ${commonPublicHeadersFull} ${publicHeadersFull} ${privateHeaders} ${sources})
 target_compile_features(fmilibcpp PUBLIC "cxx_std_17")
 set_target_properties(fmilibcpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(fmilibcpp

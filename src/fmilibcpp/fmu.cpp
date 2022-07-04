@@ -2,7 +2,7 @@
 #include "fmi1/fmi1_fmu.hpp"
 #include "fmi2/fmi2_fmu.hpp"
 
-#include <fmilibcpp/util/temp_dir.hpp>
+#include "fmilibcpp/util/temp_dir.hpp"
 
 #include <fmilib.h>
 
