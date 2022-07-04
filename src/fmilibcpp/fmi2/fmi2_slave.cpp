@@ -36,6 +36,7 @@ fmi2_slave::fmi2_slave(
     callbackFunctions.freeMemory = free;
     callbackFunctions.logger = &fmilogger;
     callbackFunctions.componentEnvironment = nullptr;
+    callbackFunctions.stepFinished = nullptr;
 
     if (fmi2_import_create_dllfmu(handle_, fmi2_fmu_kind_cs, &callbackFunctions) != jm_status_success) {
         throw std::runtime_error(std::string("failed to load fmu dll! Error: ") + fmi2_import_get_last_error(handle_));
