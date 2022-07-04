@@ -65,7 +65,7 @@ target_include_directories(fmilibcpp
         PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}"
         )
-target_link_libraries(fmilibcpp PRIVATE CONAN_PKG::fmilibrary)
+target_link_libraries(fmilibcpp PRIVATE FMILIB::FMILIB)
 if (UNIX)
   target_link_libraries(fmilibcpp INTERFACE stdc++fs PRIVATE dl)
 endif ()
