@@ -40,13 +40,14 @@ public:
 
     bool enter_initialization_mode() override
     {
-        return slave_->enter_initialization_mode();
+        bool status = slave_->enter_initialization_mode();
+        initialized = true;
+        return status;
     }
 
     bool exit_initialization_mode() override
     {
         bool status = slave_->exit_initialization_mode();
-        initialized = true;
         return status;
     }
 
@@ -62,13 +63,17 @@ public:
 
     bool reset() override
     {
-        return slave_->reset();
+        bool status = slave_->reset();
+        if (status) {
+            initialized = false;
+        }
+        return status;
     }
 
     bool get_integer(const std::vector<value_ref>& vrs, std::vector<int>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             if (std::find(integersToFetch_.begin(), integersToFetch_.end(), vr) == integersToFetch_.end()) {
                 mark_for_reading(get_model_description().get_by_vr<int>(vr)->name);
             }
@@ -80,7 +85,7 @@ public:
     bool get_real(const std::vector<value_ref>& vrs, std::vector<double>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             if (std::find(realsToFetch_.begin(), realsToFetch_.end(), vr) == realsToFetch_.end()) {
                 mark_for_reading(get_model_description().get_by_vr<double>(vr)->name);
             }
@@ -92,7 +97,7 @@ public:
     bool get_string(const std::vector<value_ref>& vrs, std::vector<std::string>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             if (std::find(stringsToFetch_.begin(), stringsToFetch_.end(), vr) == stringsToFetch_.end()) {
                 mark_for_reading(get_model_description().get_by_vr<std::string>(vr)->name);
             }
@@ -104,7 +109,7 @@ public:
     bool get_boolean(const std::vector<value_ref>& vrs, std::vector<bool>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             if (std::find(booleansToFetch_.begin(), booleansToFetch_.end(), vr) == booleansToFetch_.end()) {
                 mark_for_reading(get_model_description().get_by_vr<bool>(vr)->name);
             }
@@ -116,7 +121,7 @@ public:
     bool set_integer(const std::vector<value_ref>& vrs, const std::vector<int>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             integerSetCache_[vr] = values[i];
         }
         return true;
@@ -125,7 +130,7 @@ public:
     bool set_real(const std::vector<value_ref>& vrs, const std::vector<double>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             realSetCache_[vr] = values[i];
         }
         return true;
@@ -134,7 +139,7 @@ public:
     bool set_string(const std::vector<value_ref>& vrs, const std::vector<std::string>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             stringSetCache_[vr] = values[i];
         }
         return true;
@@ -143,7 +148,7 @@ public:
     bool set_boolean(const std::vector<value_ref>& vrs, const std::vector<bool>& values) override
     {
         for (unsigned i = 0; i < vrs.size(); i++) {
-            value_ref vr = vrs[i];
+            const value_ref vr = vrs[i];
             boolSetCache_[vr] = values[i];
         }
         return true;
@@ -191,14 +196,13 @@ public:
 
     void receiveCachedGets()
     {
-
         if (!integersToFetch_.empty()) {
             __integerGetCache_.resize(integersToFetch_.size());
             slave_->get_integer(integersToFetch_, __integerGetCache_);
 
             integerGetCache_.clear();
             for (unsigned i = 0; i < integersToFetch_.size(); i++) {
-                value_ref vr = integersToFetch_[i];
+                const value_ref vr = integersToFetch_[i];
                 integerGetCache_[vr] = __integerGetCache_[i];
             }
         }
@@ -208,7 +212,7 @@ public:
 
             realGetCache_.clear();
             for (unsigned i = 0; i < realsToFetch_.size(); i++) {
-                value_ref vr = realsToFetch_[i];
+                const value_ref vr = realsToFetch_[i];
                 realGetCache_[vr] = __realGetCache_[i];
             }
         }
@@ -218,7 +222,7 @@ public:
 
             stringGetCache_.clear();
             for (unsigned i = 0; i < stringsToFetch_.size(); i++) {
-                value_ref vr = stringsToFetch_[i];
+                const value_ref vr = stringsToFetch_[i];
                 stringGetCache_[vr] = __stringGetCache_[i];
             }
         }
@@ -228,7 +232,7 @@ public:
 
             booleanGetCache_.clear();
             for (unsigned i = 0; i < booleansToFetch_.size(); i++) {
-                value_ref vr = booleansToFetch_[i];
+                const value_ref vr = booleansToFetch_[i];
                 booleanGetCache_[vr] = __booleanGetCache_[i];
             }
         }
@@ -241,10 +245,10 @@ public:
 
         const auto& md = slave_->get_model_description();
 
-        auto v = md.get_by_name(variableName);
+        const auto& v = md.get_by_name(variableName);
         if (!v) throw std::runtime_error("No such variable '" + variableName + "'!");
 
-        auto vr = v->vr;
+        const value_ref vr = v->vr;
 
         if (v->is_integer()) {
             integersToFetch_.emplace_back(vr);
