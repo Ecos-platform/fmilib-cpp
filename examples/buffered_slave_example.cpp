@@ -33,10 +33,7 @@ void run()
         }
     }
 
-
     auto slaves = std::vector<std::unique_ptr<slave>>();
-
-
     for (auto i = 0; i < 10; i++) {
         auto slave = fmu->new_instance("instance_" + std::to_string(i));
         auto buf = std::make_unique<buffered_slave>(std::move(slave));
