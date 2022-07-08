@@ -7,6 +7,7 @@
 
 namespace
 {
+
 void fmilogger(fmi2_component_t c, fmi2_string_t instanceName, fmi2_status_t status, fmi2_string_t category, fmi2_string_t message, ...)
 {
     va_list argp;
@@ -14,6 +15,11 @@ void fmilogger(fmi2_component_t c, fmi2_string_t instanceName, fmi2_status_t sta
     fmi2_log_forwarding_v(c, instanceName, status, category, message, argp);
     va_end(argp);
 }
+
+void noopfmilogger(fmi2_component_t, fmi2_string_t, fmi2_status_t, fmi2_string_t, fmi2_string_t, ...)
+{
+}
+
 } // namespace
 
 namespace fmilibcpp
@@ -23,7 +29,8 @@ fmi2_slave::fmi2_slave(
     const std::shared_ptr<fmicontext>& ctx,
     const std::string& instanceName,
     model_description md,
-    std::shared_ptr<temp_dir> tmpDir)
+    std::shared_ptr<temp_dir> tmpDir,
+    bool fmiLogging)
     : slave(instanceName)
     , ctx_(ctx)
     , md_(std::move(md))
@@ -34,7 +41,11 @@ fmi2_slave::fmi2_slave(
     fmi2_callback_functions_t callbackFunctions;
     callbackFunctions.allocateMemory = calloc;
     callbackFunctions.freeMemory = free;
-    callbackFunctions.logger = &fmilogger;
+    if (fmiLogging) {
+        callbackFunctions.logger = &fmilogger;
+    } else {
+        callbackFunctions.logger = &noopfmilogger;
+    }
     callbackFunctions.componentEnvironment = nullptr;
     callbackFunctions.stepFinished = nullptr;
 

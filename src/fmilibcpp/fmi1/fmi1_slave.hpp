@@ -23,15 +23,16 @@ private:
     std::shared_ptr<fmicontext> ctx_;
     std::shared_ptr<temp_dir> tmpDir_;
 
-    double start_time_;
-    double stop_time_;
+    double start_time_{};
+    double stop_time_{};
 
 public:
     fmi1_slave(
         const std::shared_ptr<fmicontext>& ctx,
         const std::string& instanceName,
         model_description md,
-        std::shared_ptr<temp_dir> tmpDir);
+        std::shared_ptr<temp_dir> tmpDir,
+        bool fmiLogging);
 
     [[nodiscard]] const model_description& get_model_description() const override;
     bool setup_experiment(double start_time, double stop_time, double /*tolerance*/) override;
@@ -58,4 +59,4 @@ public:
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FMI1_SLAVE_HPP
+#endif // FMILIBCPP_FMI1_SLAVE_HPP

@@ -6,6 +6,7 @@
 
 namespace
 {
+
 void fmilogger(fmi1_component_t c, fmi1_string_t instanceName, fmi1_status_t status, fmi1_string_t category, fmi1_string_t message, ...)
 {
     va_list argp;
@@ -13,6 +14,11 @@ void fmilogger(fmi1_component_t c, fmi1_string_t instanceName, fmi1_status_t sta
     fmi1_log_forwarding_v(c, instanceName, status, category, message, argp);
     va_end(argp);
 }
+
+void noopfmilogger(fmi1_component_t, fmi1_string_t, fmi1_status_t, fmi1_string_t, fmi1_string_t, ...)
+{
+}
+
 } // namespace
 
 
@@ -23,7 +29,8 @@ fmi1_slave::fmi1_slave(
     const std::shared_ptr<fmicontext>& ctx,
     const std::string& instanceName,
     model_description md,
-    std::shared_ptr<temp_dir> tmpDir)
+    std::shared_ptr<temp_dir> tmpDir,
+    bool fmiLogging)
     : slave(instanceName)
     , ctx_(ctx)
     , md_(std::move(md))
@@ -33,7 +40,11 @@ fmi1_slave::fmi1_slave(
     fmi1_callback_functions_t callbackFunctions;
     callbackFunctions.allocateMemory = std::calloc;
     callbackFunctions.freeMemory = std::free;
-    callbackFunctions.logger = fmilogger;
+    if (fmiLogging) {
+        callbackFunctions.logger = fmilogger;
+    } else {
+        callbackFunctions.logger = noopfmilogger;
+    }
     callbackFunctions.stepFinished = nullptr;
 
     if (fmi1_import_create_dllfmu(handle_, callbackFunctions, 1) != jm_status_success) {

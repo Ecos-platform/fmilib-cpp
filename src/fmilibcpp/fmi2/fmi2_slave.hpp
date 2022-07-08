@@ -28,7 +28,8 @@ public:
         const std::shared_ptr<fmicontext>& ctx,
         const std::string& instanceName,
         model_description md,
-        std::shared_ptr<temp_dir> tmpDir);
+        std::shared_ptr<temp_dir> tmpDir,
+        bool fmiLogging);
 
     [[nodiscard]] const model_description& get_model_description() const override;
     bool setup_experiment(double start_time, double stop_time, double tolerance) override;

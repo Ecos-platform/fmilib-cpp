@@ -9,7 +9,7 @@
 namespace fmilibcpp
 {
 
-std::unique_ptr<fmu> loadFmu(const filesystem::path& fmuPath)
+std::unique_ptr<fmu> loadFmu(const filesystem::path& fmuPath, bool fmiLogging)
 {
     auto ctx = std::make_unique<fmicontext>();
 
@@ -18,9 +18,9 @@ std::unique_ptr<fmu> loadFmu(const filesystem::path& fmuPath)
 
     fmi_version_enu_t version = fmi_import_get_fmi_version(ctx->ctx_, fmuPath.string().c_str(), tmp->path().string().c_str());
     if (version == fmi_version_1_enu) {
-        return std::make_unique<fmi1_fmu>(std::move(ctx), tmp);
+        return std::make_unique<fmi1_fmu>(std::move(ctx), tmp, fmiLogging);
     } else if (version == fmi_version_2_0_enu) {
-        return std::make_unique<fmi2_fmu>(std::move(ctx), tmp);
+        return std::make_unique<fmi2_fmu>(std::move(ctx), tmp, fmiLogging);
     } else {
         //TODO
     }
