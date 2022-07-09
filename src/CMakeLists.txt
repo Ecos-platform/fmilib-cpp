@@ -25,8 +25,8 @@ set(privateHeaders
         "fmilibcpp/fmi2/fmi2_model_description.hpp"
         "fmilibcpp/fmi2/fmi2_slave.hpp"
 
-        "fmilibcpp/util/fixed_range_random_generator.hpp"
         "fmilibcpp/util/temp_dir.hpp"
+        "fmilibcpp/util/uuid.hpp"
         )
 
 set(sources
@@ -39,6 +39,8 @@ set(sources
         "fmilibcpp/fmi2/fmi2_fmu.cpp"
         "fmilibcpp/fmi2/fmi2_slave.cpp"
         "fmilibcpp/fmi2/fmi2_model_description.cpp"
+
+        "fmilibcpp/util/uuid.cpp"
         )
 
 set(publicHeadersFull)

@@ -11,7 +11,7 @@ namespace fmilibcpp
 
 std::unique_ptr<fmu> loadFmu(const filesystem::path& fmuPath, bool fmiLogging)
 {
-    auto ctx = std::make_unique<fmicontext>();
+    auto ctx = std::make_unique<fmicontext>(fmiLogging);
 
     const std::string fmuName = filesystem::path(fmuPath).stem().string();
     auto tmp = std::make_shared<temp_dir>(fmuName);
