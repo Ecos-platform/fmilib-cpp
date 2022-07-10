@@ -157,8 +157,8 @@ public:
     void transferCachedSets()
     {
         if (!integerSetCache_.empty()) {
-            std::vector<value_ref> vrs(integerSetCache_.size());
-            std::vector<int> values(integerSetCache_.size());
+            std::vector<value_ref> vrs;
+            std::vector<int> values;
             for (const auto& [vr, value] : integerSetCache_) {
                 vrs.emplace_back(vr);
                 values.emplace_back(value);
@@ -167,8 +167,8 @@ public:
             integerSetCache_.clear();
         }
         if (!realSetCache_.empty()) {
-            std::vector<value_ref> vrs(realSetCache_.size());
-            std::vector<double> values(realSetCache_.size());
+            std::vector<value_ref> vrs;
+            std::vector<double> values;
             for (const auto& [vr, value] : realSetCache_) {
                 vrs.emplace_back(vr);
                 values.emplace_back(value);
@@ -177,8 +177,8 @@ public:
             realSetCache_.clear();
         }
         if (!stringSetCache_.empty()) {
-            std::vector<value_ref> vrs(stringSetCache_.size());
-            std::vector<std::string> values(stringSetCache_.size());
+            std::vector<value_ref> vrs;
+            std::vector<std::string> values;
             for (const auto& [vr, value] : stringSetCache_) {
                 vrs.emplace_back(vr);
                 values.emplace_back(value);
@@ -187,8 +187,8 @@ public:
             stringSetCache_.clear();
         }
         if (!boolSetCache_.empty()) {
-            std::vector<value_ref> vrs(boolSetCache_.size());
-            std::vector<bool> values(boolSetCache_.size());
+            std::vector<value_ref> vrs;
+            std::vector<bool> values;
             for (const auto& [vr, value] : boolSetCache_) {
                 vrs.emplace_back(vr);
                 values.emplace_back(value);
