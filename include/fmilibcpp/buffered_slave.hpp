@@ -164,6 +164,7 @@ public:
                 values.emplace_back(value);
             }
             slave_->set_integer(vrs, values);
+            integerSetCache_.clear();
         }
         if (!realSetCache_.empty()) {
             std::vector<value_ref> vrs(realSetCache_.size());
@@ -173,6 +174,7 @@ public:
                 values.emplace_back(value);
             }
             slave_->set_real(vrs, values);
+            realSetCache_.clear();
         }
         if (!stringSetCache_.empty()) {
             std::vector<value_ref> vrs(stringSetCache_.size());
@@ -182,6 +184,7 @@ public:
                 values.emplace_back(value);
             }
             slave_->set_string(vrs, values);
+            stringSetCache_.clear();
         }
         if (!boolSetCache_.empty()) {
             std::vector<value_ref> vrs(boolSetCache_.size());
@@ -191,6 +194,7 @@ public:
                 values.emplace_back(value);
             }
             slave_->set_boolean(vrs, values);
+            boolSetCache_.clear();
         }
     }
 
