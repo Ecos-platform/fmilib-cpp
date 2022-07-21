@@ -57,7 +57,6 @@ else()
     include(cmake/conan.cmake)
     conan_cmake_autodetect(settings)
 
-    conan_add_remote(NAME osp URL https://osp.jfrog.io/artifactory/api/conan/conan-local)
     conan_cmake_run(
             CONANFILE conanfile.py
             BUILD missing
