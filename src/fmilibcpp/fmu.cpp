@@ -22,7 +22,7 @@ std::unique_ptr<fmu> loadFmu(const filesystem::path& fmuPath, bool fmiLogging)
     } else if (version == fmi_version_2_0_enu) {
         return std::make_unique<fmi2_fmu>(std::move(ctx), tmp, fmiLogging);
     } else {
-        //TODO
+        // TODO
     }
 
     return nullptr;

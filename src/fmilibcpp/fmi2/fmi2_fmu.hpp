@@ -36,4 +36,4 @@ public:
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FMI2_FMU_HPP
+#endif // FMILIBCPP_FMI2_FMU_HPP

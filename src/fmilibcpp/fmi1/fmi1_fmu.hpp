@@ -4,8 +4,8 @@
 
 #include "../fmicontext.hpp"
 
+#include "fmilibcpp/fmu.hpp"
 #include "fmilibcpp/util/temp_dir.hpp"
-#include <fmilibcpp/fmu.hpp>
 
 #include <fmilib.h>
 
@@ -35,4 +35,4 @@ public:
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FMI1_FMU_HPP
+#endif // FMILIBCPP_FMI1_FMU_HPP

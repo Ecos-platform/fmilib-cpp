@@ -9,6 +9,6 @@ namespace fmilibcpp
 
 std::string generate_uuid();
 
-} // namespace fmilicpp
+} // namespace fmilibcpp
 
 #endif // FMILIBCPP_UUID_HPP

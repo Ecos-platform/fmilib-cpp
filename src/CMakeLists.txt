@@ -1,5 +1,6 @@
 set(publicHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
+
 # ==============================================================================
 # fmilib wrapper
 # ==============================================================================
@@ -61,6 +62,7 @@ target_link_libraries(fmilibcpp PRIVATE FMILIB::FMILIB)
 if (UNIX)
   target_link_libraries(fmilibcpp INTERFACE stdc++fs PRIVATE dl)
 endif ()
+
 
 # ==============================================================================
 # Installation rules

@@ -2,10 +2,9 @@
 #ifndef FMILIBCPP_FMICONTEXT_HPP
 #define FMILIBCPP_FMICONTEXT_HPP
 
-#include "fmilib.h"
-
-#include <memory>
 #include <cstring>
+#include <fmilib.h>
+#include <memory>
 
 namespace
 {
@@ -21,7 +20,7 @@ void logger_callback(
 
 void noop_logger_callback(
     jm_callbacks*,
-    jm_string ,
+    jm_string,
     jm_log_level_enu_t,
     jm_string)
 {
@@ -73,4 +72,4 @@ public:
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FMICONTEXT_HPP
+#endif // FMILIBCPP_FMICONTEXT_HPP

@@ -18,7 +18,8 @@ public:
     const std::string instanceName;
 
     explicit slave(std::string instanceName)
-        : instanceName(std::move(instanceName)){}
+        : instanceName(std::move(instanceName))
+    { }
 
     virtual bool setup_experiment(
         double start_time = 0,

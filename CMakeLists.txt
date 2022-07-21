@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.15)
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" projectVersion)
 project("fmilibcpp" VERSION ${projectVersion})
 message("Current ${PROJECT_NAME} version: ${CMAKE_PROJECT_VERSION}\n")
@@ -26,7 +26,7 @@ endif()
 if (MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     add_definitions("-D_WIN32_WINNT=0x600" "-D_CRT_SECURE_NO_WARNINGS")
-    add_compile_options("/wd4996" "/wd4251" "/wd4244" "/wd4267")
+    add_compile_options("/wd4996" "/wd4251" "/wd4244" "/wd4267" "/wd4217")
 endif ()
 
 # Prepare for export and installation.

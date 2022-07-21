@@ -27,4 +27,4 @@ std::unique_ptr<fmu> loadFmu(const filesystem::path& fmuPath, bool fmiLogging = 
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FMU_FMU_HPP
+#endif // FMILIBCPP_FMU_FMU_HPP

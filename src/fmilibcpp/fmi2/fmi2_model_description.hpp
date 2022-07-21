@@ -13,4 +13,4 @@ model_description create_model_description(fmi2_import_t* handle);
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FMI2_MODEL_DESCRIPTION_HPP
+#endif // FMILIBCPP_FMI2_MODEL_DESCRIPTION_HPP

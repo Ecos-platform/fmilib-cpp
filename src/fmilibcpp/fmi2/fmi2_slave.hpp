@@ -57,4 +57,4 @@ public:
 
 } // namespace fmilibcpp
 
-#endif //FMILIBCPP_FMI2_SLAVE_HPP
+#endif // FMILIBCPP_FMI2_SLAVE_HPP

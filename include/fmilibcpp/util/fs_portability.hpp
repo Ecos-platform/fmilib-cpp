@@ -17,4 +17,4 @@ namespace filesystem = std::experimental::filesystem;
 }
 #endif
 
-#endif //FMILIBCPP_FS_PORTABILITY_HPP
+#endif // FMILIBCPP_FS_PORTABILITY_HPP
