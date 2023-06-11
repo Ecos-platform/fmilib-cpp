@@ -5,6 +5,6 @@ include(CMakeFindDependencyMacro)
 
 list(APPEND CMAKE_MODULE_PATH "${PACKAGE_PREFIX_DIR}/@FMILIBCPP_CMAKE_INSTALL_DIR@")
 
-find_dependency(FMILIB REQUIRED)
+find_dependency(unofficial-fmilib CONFIG REQUIRED)
 
 list(REMOVE_AT CMAKE_MODULE_PATH -1)
