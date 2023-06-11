@@ -62,18 +62,3 @@ target_link_libraries(fmilibcpp PRIVATE unofficial::fmilib::fmilib)
 if (UNIX)
   target_link_libraries(fmilibcpp INTERFACE stdc++fs PRIVATE dl)
 endif ()
-
-
-# ==============================================================================
-# Installation rules
-# ==============================================================================
-
-install(
-        TARGETS fmilibcpp
-        EXPORT "${FMILIBCPP_EXPORT_TARGET}"
-        ${FMILIBCPP_INSTALL_DESTINATIONS}
-)
-install(
-        DIRECTORY "${publicHeaderDir}/fmilibcpp"
-        DESTINATION "${FMILIBCPP_HEADER_INSTALL_DIR}"
-)

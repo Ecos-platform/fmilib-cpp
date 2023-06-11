@@ -1,5 +1,4 @@
-
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.19)
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" projectVersion)
 project("fmilibcpp" VERSION ${projectVersion})
 message("Current ${PROJECT_NAME} version: ${CMAKE_PROJECT_VERSION}\n")
@@ -20,10 +19,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
-
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release")
-endif()
 
 if (MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)

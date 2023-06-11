@@ -1,14 +1,10 @@
 name: Build
 
-env:
-  CONAN_REVISIONS_ENABLED: 1
-  CONAN_NON_INTERACTIVE: True
-
 on: [push, workflow_dispatch]
 
 jobs:
   cmake-on-linux:
-    name: cmake
+
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -17,7 +13,7 @@ jobs:
         build_type: [Debug, Release]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Restore artifacts, or run vcpkg, build (and cache artifacts as post step)
         uses: lukka/run-vcpkg@v10
@@ -30,7 +26,7 @@ jobs:
 
       - name: Configure and build
         run: |
-          cmake . -B build -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
+          cmake . -B build -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build build
         shell: bash
       - name: Test
@@ -39,7 +35,7 @@ jobs:
          ctest --output-on-failure
 
   cmake-on-windows:
-    name: cmake
+
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -48,7 +44,7 @@ jobs:
         build_type: [Debug, Release]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Restore artifacts, or run vcpkg, build (and cache artifacts as post step)
         uses: lukka/run-vcpkg@v10
@@ -61,7 +57,7 @@ jobs:
 
       - name: Configure and build
         run: |
-          cmake . -A x64 -B build -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
+          cmake . -A x64 -B build -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build build --config ${{ matrix.build_type }}
 
       - name: Test
