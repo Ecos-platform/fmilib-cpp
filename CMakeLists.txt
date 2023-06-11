@@ -17,7 +17,9 @@ option(FMILIBCPP_BUILD_EXAMPLES "Build examples" OFF)
 # ==============================================================================
 
 set(CMAKE_CXX_STANDARD 17)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(CMakePackageConfigHelpers)
+include(GNUInstallDirs)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -28,20 +30,6 @@ if (MSVC)
     add_definitions("-D_WIN32_WINNT=0x600" "-D_CRT_SECURE_NO_WARNINGS")
     add_compile_options("/wd4996" "/wd4251" "/wd4244" "/wd4267" "/wd4217")
 endif ()
-
-# Prepare for export and installation.
-set(FMILIBCPP_HEADER_INSTALL_DIR "include")
-if (WIN32)
-    set(FMILIBCPP_CMAKE_INSTALL_DIR "cmake")
-else ()
-    set(FMILIBCPP_CMAKE_INSTALL_DIR "share/${PROJECT_NAME}/cmake")
-endif ()
-set(FMILIBCPP_INSTALL_DESTINATIONS
-        ARCHIVE DESTINATION "lib"
-        LIBRARY DESTINATION "lib"
-        RUNTIME DESTINATION "bin"
-        INCLUDES DESTINATION "${FMILIBCPP_HEADER_INSTALL_DIR}")
-set(FMILIBCPP_EXPORT_TARGET "${PROJECT_NAME}-targets")
 
 # ==============================================================================
 # Dependencies
@@ -70,34 +58,27 @@ if (FMILIBCPP_BUILD_EXAMPLES OR FMILIBCPP_BUILD_TESTS)
 endif ()
 
 
-
 # ==============================================================================
 # Exports and remaining installation
 # ==============================================================================
 
-install(
-        EXPORT "${FMILIBCPP_EXPORT_TARGET}"
-        DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}"
-        NAMESPACE "${PROJECT_NAME}::"
-)
-
-include(CMakePackageConfigHelpers)
-
-# Generate and install package-config file.
-set(configFile "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config.cmake")
-set(targetsFile "${FMILIBCPP_CMAKE_INSTALL_DIR}/${FMILIBCPP_EXPORT_TARGET}.cmake")
-configure_package_config_file(
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/project-config.cmake.in"
-        "${configFile}"
-        INSTALL_DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}"
-        PATH_VARS targetsFile
-)
-install(FILES "${configFile}" DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}")
-
-# Generate and install package-version file
-set(versionFile "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
+configure_package_config_file(cmake/config.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/fmilibcpp-config.cmake
+        INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/fmilibcpp
+        NO_SET_AND_CHECK_MACRO)
 write_basic_package_version_file(
-        "${versionFile}"
-        VERSION "${PROJECT_VERSION}"
-        COMPATIBILITY "SameMajorVersion")
-install(FILES "${versionFile}" DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}")
+        ${CMAKE_CURRENT_BINARY_DIR}/fmilibcpp-config-version.cmake
+        VERSION ${CMAKE_PROJECT_VERSION}
+        COMPATIBILITY SameMajorVersion)
+install(
+        FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/fmilibcpp-config.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/fmilibcpp-config-version.cmake
+        DESTINATION
+        ${CMAKE_INSTALL_DATADIR}/fmilibcpp)
+
+install(TARGETS fmilibcpp EXPORT fmilibcpp-targets)
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(EXPORT fmilibcpp-targets
+        NAMESPACE fmilibcpp::
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/fmilibcpp)
