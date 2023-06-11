@@ -101,11 +101,3 @@ write_basic_package_version_file(
         VERSION "${PROJECT_VERSION}"
         COMPATIBILITY "SameMajorVersion")
 install(FILES "${versionFile}" DESTINATION "${FMILIBCPP_CMAKE_INSTALL_DIR}")
-
-# Install custom find modules
-install(FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindFMILIB.cmake"
-        DESTINATION
-        "${FMILIBCPP_CMAKE_INSTALL_DIR}"
-        )
-
