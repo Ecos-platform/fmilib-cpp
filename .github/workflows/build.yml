@@ -13,25 +13,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04]
+        os: [ubuntu-20.04]
         build_type: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install prerequisites
-        run: |
-          sudo pip3 install --upgrade setuptools pip
-          sudo pip3 install conan
 
-      - name: Configure Conan
-        run: conan remote add ais https://ais.jfrog.io/artifactory/api/conan/ais-conan-local --force
-
-      - name: Run conan
-        run: conan install . -s build_type=${{ matrix.build_type }} -s compiler.libcxx=libstdc++11 --install-folder=build -b missing
+      - name: Restore artifacts, or run vcpkg, build (and cache artifacts as post step)
+        uses: lukka/run-vcpkg@v10
+        id: runvcpkg
+        with:
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgGitCommitId: '12c2a93b4007612b5ffa980c9d2235eb0bcac10f'
+          vcpkgJsonGlob: 'vcpkg.json'
+          appendedCacheKey: vcpkginstall
 
       - name: Configure and build
         run: |
-          cmake . -B build -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
+          cmake . -B build -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
           cmake --build build
         shell: bash
       - name: Test
@@ -50,20 +49,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install prerequisites
-        run: |
-          pip3 install --upgrade setuptools pip
-          pip3 install conan
 
-      - name: Configure Conan
-        run: conan remote add ais https://ais.jfrog.io/artifactory/api/conan/ais-conan-local --force
-
-      - name: Run conan
-        run: conan install . -s build_type=${{ matrix.build_type }} --install-folder=build -b missing
+      - name: Restore artifacts, or run vcpkg, build (and cache artifacts as post step)
+        uses: lukka/run-vcpkg@v10
+        id: runvcpkg
+        with:
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgGitCommitId: '12c2a93b4007612b5ffa980c9d2235eb0bcac10f'
+          vcpkgJsonGlob: 'vcpkg.json'
+          appendedCacheKey: vcpkginstall
 
       - name: Configure and build
         run: |
-          cmake . -A x64 -B build -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
+          cmake . -A x64 -B build -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" -DFMILIBCPP_BUILD_EXAMPLES=ON -DFMILIBCPP_BUILD_TESTS=ON
           cmake --build build --config ${{ matrix.build_type }}
 
       - name: Test
